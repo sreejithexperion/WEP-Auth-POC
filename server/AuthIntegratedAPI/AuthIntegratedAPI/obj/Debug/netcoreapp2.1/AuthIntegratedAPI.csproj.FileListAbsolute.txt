@@ -1,0 +1,14 @@
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\bin\Debug\netcoreapp2.1\AuthIntegratedAPI.deps.json
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\bin\Debug\netcoreapp2.1\AuthIntegratedAPI.runtimeconfig.json
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\bin\Debug\netcoreapp2.1\AuthIntegratedAPI.runtimeconfig.dev.json
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\bin\Debug\netcoreapp2.1\AuthIntegratedAPI.dll
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\bin\Debug\netcoreapp2.1\AuthIntegratedAPI.pdb
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.csproj.AssemblyReference.cache
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.csproj.CoreCompileInputs.cache
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.RazorAssemblyInfo.cache
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.RazorAssemblyInfo.cs
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.AssemblyInfoInputs.cache
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.AssemblyInfo.cs
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.RazorTargetAssemblyInfo.cache
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.dll
+D:\ProtoCall_POC\AuthIntegratedAPI\AuthIntegratedAPI\obj\Debug\netcoreapp2.1\AuthIntegratedAPI.pdb
