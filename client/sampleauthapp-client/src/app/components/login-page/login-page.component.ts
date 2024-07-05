@@ -31,7 +31,7 @@ export class LoginPageComponent {
         {
           tokenValue = response.token;
         }
-        window.opener.postMessage(tokenValue, 'http://localhost:4201');
+        window.opener.postMessage(tokenValue, 'http://localhost:4200');
         window.close();
         // Handle successful login, e.g., redirect to another page
       },

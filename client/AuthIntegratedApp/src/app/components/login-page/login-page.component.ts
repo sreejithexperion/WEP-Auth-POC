@@ -15,7 +15,7 @@ export class LoginPageComponent {
     // Listen for messages from the popup
     window.addEventListener('message', (event) => {
       // Verify the origin of the message
-      if (event.origin === 'http://localhost:4200') {
+      if (event.origin === 'http://localhost:4201') {
         this.communicationService.sendValue(event.data);
         var accessToken = event.data;
         this.authenticateApp(accessToken);
@@ -29,7 +29,7 @@ export class LoginPageComponent {
     const left = (screen.width / 2) - (width / 2);
     const top = (screen.height / 2) - (height / 2);
 
-    window.open("http://localhost:4200/login", 'popup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=yes`);
+    window.open("http://localhost:4201/login", 'popup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=yes`);
   }
 
   authenticateApp(accessToken: string) {
