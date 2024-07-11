@@ -2,7 +2,7 @@
 
 Server API projects are using ASP.NET Core 8 and client side is using Angular 15.
 
-![Architecture](Docs/WEP_Auth_POC.jpg)
+![Architecture](Docs/WEP_Auth_Architecture.jpg)
 
 Steps
 ----------
