@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:44349/api'; // Replace with your actual API URL
+  private apiUrl = 'https://localhost:5025/api'; // Replace with your actual API URL
   private token: string | null = null;
 
   constructor(private http: HttpClient) { }
@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   getDashboardData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/values`);
+    return this.http.get(`${this.apiUrl}/home`);
   }
 
   getToken(): string | null {
