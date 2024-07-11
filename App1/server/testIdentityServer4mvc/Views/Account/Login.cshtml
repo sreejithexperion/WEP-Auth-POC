@@ -1,0 +1,30 @@
+@model LoginInputModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>@ViewData["Title"]</h1>
+@if (Model == null)
+{
+    <p>Model is null</p>
+} else {
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="Username" value="@Model.Username" />
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="Password" value="@Model.Password" />
+        </div>
+        <div>
+            <input type="checkbox" id="rememberLogin" name="RememberLogin" />
+            <label for="rememberLogin">Remember me</label>
+        </div>
+        <button type="submit" name="button" value="login">Login</button>
+        <button type="submit" name="button" value="cancel">Cancel</button>
+    </form>
+}
