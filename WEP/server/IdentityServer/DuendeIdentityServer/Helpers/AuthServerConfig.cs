@@ -1,9 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
 public static class AuthServerConfigs
 {
-    public static List<TokenValidationParameters> GetTokenValidationParameters()
+    public static List<TokenValidationParameters> GetTokenValidationParameters(string? key)
     {
         return new List<TokenValidationParameters>
         {
@@ -14,7 +15,7 @@ public static class AuthServerConfigs
                 ValidateAudience = true,
                 ValidAudience = "testIdentityServer4mvc",
                 ValidateLifetime = true,
-                //IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("signing-key-1")),
+                //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
                 ValidateIssuerSigningKey = false,
                 SignatureValidator = delegate (string token, TokenValidationParameters parameters)
                 {

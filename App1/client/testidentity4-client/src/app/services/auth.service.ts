@@ -68,8 +68,8 @@ export class AuthService {
   exchangeToken(accessToken: any) {
     const grant_type = "urn:ietf:params:oauth:grant-type:token-exchange";
     const subject_token_type = "urn:ietf:params:oauth:token-type:access_token";
-    const audience = 'wep';
-    const client_id = 'token_exchange_client';
+    const audience = 'wep_client';
+    const client_id = 'wep_client';
 
     var authority = 'https://localhost:5162';
 
@@ -79,17 +79,17 @@ export class AuthService {
         .set('subject_token', accessToken)
         .set('subject_token_type', subject_token_type)
         .set('audience', audience)
-        .set('scope', 'testIdentityServer4mvc');
+        .set('scope', 'wep_client');
         //.set('resource', 'https://localhost:8900');
 
       this.http.post(`${authority}/connect/token`, body, {
         headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded'
         })
-      }).subscribe((tokens: any) => {
-        localStorage.setItem('ex_access_token', tokens.access_token);
-        localStorage.setItem('ex_id_token', tokens.access_token);
-        window.opener.postMessage(tokens.access_token, 'http://localhost:4200');
+      }).subscribe((acctokens: any) => {
+        localStorage.setItem('ex_access_token', acctokens.access_token);
+        localStorage.setItem('ex_id_token', acctokens.access_token);
+        window.opener.postMessage(acctokens.access_token, 'http://localhost:4200');
         window.close();
       });
     }

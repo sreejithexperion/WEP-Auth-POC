@@ -1,3 +1,5 @@
+using Duende.IdentityServer.Validation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,7 +13,9 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(Config.GetClients())
     .AddInMemoryIdentityResources(Config.GetIdentityResources())
     .AddInMemoryApiScopes(Config.GetApiScopes())
-    .AddExtensionGrantValidator<TokenExchangeGrantValidator>();
+    .AddExtensionGrantValidator<TokenExchangeGrantValidator>()
+    //.AddProfileService<IdentityProfileService>()
+    .AddCustomTokenRequestValidator<CustomTokenValidator>();
 
 builder.Services.AddCors(options =>
 {

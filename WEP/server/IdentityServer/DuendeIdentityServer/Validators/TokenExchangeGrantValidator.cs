@@ -1,6 +1,7 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 using IdentityModel;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -8,11 +9,13 @@ using System.Threading.Tasks;
 public class TokenExchangeGrantValidator : IExtensionGrantValidator
 {
     private readonly ITokenValidator _tokenValidator;
+    private readonly IConfiguration _config;
     public string GrantType => "urn:ietf:params:oauth:grant-type:token-exchange";
 
-    public TokenExchangeGrantValidator(ITokenValidator tokenValidator)
+    public TokenExchangeGrantValidator(ITokenValidator tokenValidator, IConfiguration configuration)
     {
         _tokenValidator = tokenValidator;
+        _config = configuration;
     }
 
     public async Task ValidateAsync(ExtensionGrantValidationContext context)
@@ -41,19 +44,23 @@ public class TokenExchangeGrantValidator : IExtensionGrantValidator
             //     return;
             // }
 
-            var subjectClaims = principal.Claims;
+            var subjectClaims = principal.Claims.ToList();
 
+            var modifiedClaims = ModifyClaims(subjectClaims);
+            
             var claims = new List<Claim>
             {
-                new Claim(JwtClaimTypes.Subject, subjectClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Subject)?.Value ?? ""),
-                new Claim(JwtClaimTypes.AuthenticationTime, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtClaimTypes.Issuer, "wep_identity"),
+                new Claim(JwtClaimTypes.Audience, "wep_client"),
+                //new Claim(JwtClaimTypes.Subject, subjectClaims.FirstOrDefault(c => c.Type == JwtClaimTypes.Subject)?.Value ?? ""),
+                //new Claim(JwtClaimTypes.AuthenticationTime, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
                 // Add other claims as necessary
             };
-        
+
             context.Result = new GrantValidationResult(
                 subject: "exc_server",
                 authenticationMethod: GrantType,
-                claims: principal.Claims);
+                claims: claims);
         }
         else
         {
@@ -66,7 +73,8 @@ public class TokenExchangeGrantValidator : IExtensionGrantValidator
     private ClaimsPrincipal ValidateJwt(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var validationParametersList = AuthServerConfigs.GetTokenValidationParameters();
+        var jwtKey = _config["Jwt:Key"];
+        var validationParametersList = AuthServerConfigs.GetTokenValidationParameters(jwtKey);
 
         foreach (var validationParameters in validationParametersList)
         {
@@ -82,5 +90,24 @@ public class TokenExchangeGrantValidator : IExtensionGrantValidator
         }
 
         return null;
+    }
+
+    private List<Claim> ModifyClaims(List<Claim> claims)
+    {
+        var issuerClaim = claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Issuer);
+        if (issuerClaim != null)
+        {
+            claims.Remove(issuerClaim); // Remove existing issuer claim
+            claims.Add(new Claim(JwtClaimTypes.Issuer, "wep_identity")); // Add new issuer claim
+        }
+
+        var audienceClaim = claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Audience);
+        if (audienceClaim != null)
+        {
+            claims.Remove(audienceClaim); // Remove existing audience claim
+            claims.Add(new Claim(JwtClaimTypes.Audience, "wep_client")); // Add new audience claim
+        }
+
+        return claims;
     }
 }

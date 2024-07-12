@@ -18,6 +18,7 @@ export class LoginPageComponent {
       if (event.origin === 'http://localhost:4201') {
         this.communicationService.sendValue(event.data);
         var accessToken = event.data;
+        localStorage.setItem("accesstoken", accessToken);
         this.authService.setToken(accessToken);
         this.router.navigate(['/dashboard']);
         //this.authenticateApp(accessToken);

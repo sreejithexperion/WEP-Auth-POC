@@ -24,7 +24,8 @@ public static class Config
     {
         Scopes = new List<string>
         {
-            "testIdentityServer4mvc"
+            "testIdentityServer4mvc",
+            "wep_client"
         }
     };
 
@@ -32,7 +33,8 @@ public static class Config
     {
         return new List<ApiScope>
         {
-            new ApiScope("testIdentityServer4mvc", "testIdentityServer4mvc")
+            new ApiScope("testIdentityServer4mvc", "testIdentityServer4mvc"),
+            new ApiScope("wep_client", "wep_client")
         };
     }
 
@@ -52,7 +54,7 @@ public static class Config
             },
             new Client
             {
-                ClientId = "token_exchange_client",
+                ClientId = "wep_client",
                 AllowedGrantTypes = new[] { "urn:ietf:params:oauth:grant-type:token-exchange" },
                 ClientSecrets =
                 {
@@ -62,7 +64,8 @@ public static class Config
                 { 
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "testIdentityServer4mvc" 
+                    "testIdentityServer4mvc",
+                    "wep_client"
                 },
                 RequireClientSecret = false
             }

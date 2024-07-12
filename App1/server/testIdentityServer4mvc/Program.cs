@@ -1,6 +1,9 @@
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +45,25 @@ builder.Services.AddControllersWithViews();
 //     options.Scope.Add("api1");
 // });
 
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
+var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+var key = jwtSettings["Key"];
+RSA rsa = RSA.Create();
+var rsaSecurityKey = new RsaSecurityKey(rsa)
+{
+    KeyId = key
+};
+// RSAParameters rsaParams = rsa.ExportParameters(true); // includePrivateParameters: true
+
+// Create signing credentials
+var signingCredentials = new SigningCredentials(
+    rsaSecurityKey, 
+    SecurityAlgorithms.RsaSha256);
+    
 builder.Services.AddIdentityServer()
+        //.AddSigningCredential(signingCredentials)
         .AddSigningCredential(new X509Certificate2("C:\\Program Files\\OpenSSL-Win64\\bin\\localhost.pfx", "Exp@123"))
         .AddInMemoryIdentityResources(Config.IdentityResources)
         .AddInMemoryApiScopes(Config.ApiScopes)
