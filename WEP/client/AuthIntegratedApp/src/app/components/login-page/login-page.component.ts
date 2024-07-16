@@ -3,6 +3,8 @@ import { CommunicationService } from 'src/app/services/communication.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalLoginComponent } from '../modal-login/modal-login.component';
 
 @Component({
   selector: 'app-login-page',
@@ -10,7 +12,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent {
-  constructor(private communicationService: CommunicationService, private authService: AuthService, private router: Router, private http: HttpClient) { }
+  constructor(private communicationService: CommunicationService, private authService: AuthService, private router: Router, private http: HttpClient, private dialog: MatDialog) { }
 
   ngOnInit() {
     // Listen for messages from the popup
@@ -91,5 +93,24 @@ export class LoginPageComponent {
         // Handle login failure, e.g., show an error message
       }
     );
+  }
+
+  openConnect() {
+    alert("Connect login");
+  }
+
+  openBoost() {
+    alert("Boost login");
+  }
+
+  openModalPopup() {
+    const dialogRef = this.dialog.open(ModalLoginComponent, {
+      width: '420px',
+      data: { name: 'Angular' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

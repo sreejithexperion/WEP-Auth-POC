@@ -18,8 +18,8 @@
   }
   
   .login-form {
-    //background-color: white;
-    background: url('/assets/WEP Portal.png') no-repeat center center fixed;
+    background-color: white;
+    //background: url('/assets/WEP Portal.png') no-repeat center center fixed;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -51,4 +51,21 @@
 
   .button-container {
     margin-top: 150px;
+  }
+
+  .button-login-main {
+    //width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 25px; /* This makes the button corners round */
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 1275px;
+  }
+  
+  .button-login:hover {
+    background-color: #0056b3;
   }
