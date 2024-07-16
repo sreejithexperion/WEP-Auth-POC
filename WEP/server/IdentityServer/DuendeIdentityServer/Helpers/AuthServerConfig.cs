@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
@@ -6,6 +7,7 @@ public static class AuthServerConfigs
 {
     public static List<TokenValidationParameters> GetTokenValidationParameters(string? key)
     {
+         var publicCertificate = new X509Certificate2("C:\\Program Files\\OpenSSL-Win64\\bin\\localhost.crt", "Exp@123");
         return new List<TokenValidationParameters>
         {
             new TokenValidationParameters
@@ -15,7 +17,7 @@ public static class AuthServerConfigs
                 ValidateAudience = true,
                 ValidAudience = "testIdentityServer4mvc",
                 ValidateLifetime = true,
-                //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                // IssuerSigningKey = new X509SecurityKey(publicCertificate),
                 ValidateIssuerSigningKey = false,
                 SignatureValidator = delegate (string token, TokenValidationParameters parameters)
                 {

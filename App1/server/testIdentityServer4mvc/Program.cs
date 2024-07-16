@@ -10,56 +10,26 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// builder.Services.AddAuthentication(options =>
-//     {
-//         options.DefaultScheme = "Cookies";
-//         options.DefaultChallengeScheme = "oidc";
-//     })
-//     .AddCookie("Cookies")
-//     .AddOpenIdConnect("oidc", options =>
-//     {
-//         options.Authority = "https://localhost:5212"; // IdentityServer URL
-//         options.ClientId = "pkce_client";
-//         options.ClientSecret = "secret";
-//         options.ResponseType = "code";
-//         options.SaveTokens = true;
-//     });
-
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultScheme = "Cookies";
-//     options.DefaultChallengeScheme = "oidc";
-// })
-// .AddCookie("Cookies")
-// .AddOpenIdConnect("oidc", options =>
-// {
-//     options.Authority = "https://localhost:5001";
-//     options.ClientId = "pkce_client";
-//     options.ClientSecret = "secret";
-//     options.ResponseType = "code";
-//     options.UsePkce = true;
-//     options.SaveTokens = true;
-    
-//     options.Scope.Add("openid");
-//     options.Scope.Add("profile");
-//     options.Scope.Add("api1");
-// });
-
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
-var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+// var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
+// var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 var key = jwtSettings["Key"];
-RSA rsa = RSA.Create();
-var rsaSecurityKey = new RsaSecurityKey(rsa)
-{
-    KeyId = key
-};
+// RSA rsa = RSA.Create();
+// var rsaSecurityKey = new RsaSecurityKey(rsa)
+// {
+//     KeyId = key
+// };
+
+var rsa = new RSACryptoServiceProvider(2048);
+rsa.ImportRSAPrivateKey(Convert.FromBase64String(key), out _);
+
+var signingKey = new RsaSecurityKey(rsa);
 // RSAParameters rsaParams = rsa.ExportParameters(true); // includePrivateParameters: true
 
 // Create signing credentials
 var signingCredentials = new SigningCredentials(
-    rsaSecurityKey, 
+    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
     SecurityAlgorithms.RsaSha256);
     
 builder.Services.AddIdentityServer()

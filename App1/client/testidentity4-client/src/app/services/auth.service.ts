@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private clientId = 'pkce_client';
   private authority = 'https://localhost:5212'; // URL of your IdentityServer
   private redirectUri = 'http://localhost:4201/callback';
-  private postLogoutRedirectUri = 'http://localhost:4200';
+  private postLogoutRedirectUri = 'http://localhost:4201';
   private responseType = 'code';
   private scope = 'openid profile testIdentityServer4mvc';
 
@@ -52,6 +53,9 @@ export class AuthService {
         localStorage.setItem('access_token', tokens.access_token);
         localStorage.setItem('id_token', tokens.id_token);
         this.exchangeToken(tokens.access_token);
+        // if(this.getSource() === 'wep' && this.getAppKey() === 'xvbhjjj') {
+        //   this.exchangeToken(tokens.access_token);
+        // }
       });
     }
   }
@@ -59,10 +63,13 @@ export class AuthService {
   logout() {
     const params = new HttpParams()
       .set('post_logout_redirect_uri', this.postLogoutRedirectUri);
-
+    const idToken = localStorage.getItem('id_token');
+    const logoutUrl = `${this.authority}/connect/endsession?id_token_hint=${idToken}&post_logout_redirect_uri=${this.postLogoutRedirectUri}`;
+    window.location.href = logoutUrl;
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
-    window.location.href = `${this.authority}/connect/endsession?${params.toString()}`;
+    localStorage.removeItem('accesstoken');
+    //window.location.href = `${this.authority}/connect/endsession?${params.toString()}`;
   }
 
   exchangeToken(accessToken: any) {
@@ -96,5 +103,21 @@ export class AuthService {
 
   get isAuthenticated(): boolean {
     return !!localStorage.getItem('access_token');
+  }
+
+  setSource(source: string) {
+    sessionStorage.setItem('source', source);
+  }
+
+  setAppKey(appKey: string) {
+    sessionStorage.setItem('appKey', appKey);
+  }
+
+  getSource() {
+    return sessionStorage.getItem('source');
+  }
+
+  getAppKey() {
+    return sessionStorage.getItem('appKey');
   }
 }

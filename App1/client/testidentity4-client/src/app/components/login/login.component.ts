@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AuthConfig, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
 import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
+import { ActivatedRoute } from '@angular/router';
 //import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 
 @Component({
@@ -39,36 +40,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     //usePkce: true
   }
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private oauthService: OAuthService) {
-    // //this.oauthService.configure(this.authConfig);
-    // this.configureWithNewConfigApi();
-    // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    // //this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    // //this.oauthService.loadDiscoveryDocumentAndLogin();
-    // this.$oauthSubscription = this.oauthService.events.subscribe((event: OAuthEvent) => {
-    //   this.accessToken = this.oauthService.getAccessToken();
-    // });
-    this.configureWithNewConfigApi();
+  constructor(
+    private http: HttpClient, 
+    private router: Router, 
+    private authService: AuthService, 
+    private oauthService: OAuthService, 
+    private route: ActivatedRoute) {
+      //this.configureWithNewConfigApi();
   }
 
   ngOnInit() {
-    //this.oauthService.initCodeFlow();
-    //this.configureWithNewConfigApi();
+    this.route.queryParams.subscribe(params => {
+      const src = params['src'];
+      const appKey = params['appkey'];
+      this.authService.setSource(src);
+      this.authService.setAppKey(appKey);
+      console.log(src + appKey);
+      this.configureWithNewConfigApi();
+    });
   }
-
-  // private ConfigureImplicitFlowAuthentication() {
-  //   this.oauthService.configure(this.authConfig);
-  //   this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-  //   this.oauthService.loadDiscoveryDocument().then(doc => {
-  //     this.oauthService.tryLogin().catch(err => {
-  //       console.error(err);
-  //     }).then(() => {
-  //       if (!this.oauthService.hasValidAccessToken()) {
-  //         this.oauthService.initImplicitFlow()
-  //       }
-  //     });
-  //   });
-  // }
 
   private configureWithNewConfigApi() {
     this.oauthService.configure(this.authConfig);

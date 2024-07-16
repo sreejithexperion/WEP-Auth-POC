@@ -19,6 +19,7 @@ export class CallbackComponent {
   }
 
   logout() {
+    //this.oauthService.logOut();
     this.authService.logout();
   }
 }

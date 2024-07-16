@@ -1,16 +1,15 @@
-<header>
-    <div class="navbar bd-navbar box-shadow">
-      <div class="container d-flex justify-content-between">
-        <strong>WEP Client</strong>
-        <!-- <button *ngIf="logged" type="button" (click)="logout()" class="btn btn-outline-primary">
-          Logout
-        </button> -->
-      </div>
+
+<div class="background-container">
+  <!-- <div class="login-container"> -->
+    <div class="login-form">
+      <h2 class="text-class">Welltrack Ecosystem Portal</h2>
+      <form>
+        <div class="button-container">
+          <button type="button" class="button-login" (click)="openNewWindow()">Sign in with HelpNow</button>
+          <button type="button" class="button-login">Sign in with Connect</button>
+          <button type="button" class="button-login">Sign in with Boost</button>
+        </div>
+      </form>
     </div>
-  </header>
-  <section class="jumbotron text-center">
-    <div class="left" style="max-width: 150px;">
-      <button class="btn btn-outline-primary" (click)="openNewWindow()">Login with App1</button>
-      <!-- <button class="btn btn-outline-primary">Login with App2 (Google)</button> -->
-    </div>
-  </section>
+  <!-- </div> -->
+</div>

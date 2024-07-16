@@ -62,4 +62,18 @@ public class AccountController : Controller
         ViewData["ReturnUrl"] = model.ReturnUrl;
         return View(model);
     }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Logout()
+    {
+         return SignOut();
+    }
+
+    // [HttpPost]
+    // [AllowAnonymous]
+    // public async Task<IActionResult> Logout()
+    // {
+    //     return SignOut("Cookies", "oidc");
+    // }
 }
